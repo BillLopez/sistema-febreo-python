@@ -1,113 +1,123 @@
 import streamlit as st
 import pandas as pd
 
+# Configuraci車n de p芍gina con identidad profesional
 st.set_page_config(
-    page_title="Sistema Febreo - Bill Lopez", 
+    page_title="Sistema Febreo - Anal赤tica", 
     page_icon="??", 
     layout="wide"
 )
 
-if "movimientos" not in st.session_state:
-    st.session_state.movimientos = []
-
+# --- NAVEGACI車N LATERAL ---
 with st.sidebar:
     st.title("Panel de Control")
+    # Navegaci車n basada en los requisitos de la gu赤a
     seccion = st.selectbox(
         "Navegaci車n Principal",
-        ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"]
+        ["Inicio", "Flujo de Caja", "Inventario NumPy", "Librer赤a Funciones", "Gesti車n POO"]
     )
     st.divider()
-    st.caption("Developer: Bill Giner Lopez Milla")
-    st.caption("Egresado Ingenier赤a de Sistemas - UNI")
+    st.caption("Consultor: Bill Giner Lopez Milla")
+    st.caption("Egresado Ingenier赤a de Sistemas - USMP")
     st.caption("Ciclo Acad谷mico 2026")
 
-if seccion == "Home":
-    st.title("?? PySistemas Analytics: Plataforma de Gesti車n Febreo")
+# --- SECCI車N 1: INICIO (HOME) ---
+if seccion == "Inicio":
+    st.title("PySistemas Analytics: Plataforma de Gesti車n Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
     
     with col_img:
-        try:
-            st.image("logo_lopez.png", use_container_width=True)
-        except:
-            st.warning("Archivo logo_lopez.png no hallado en el repositorio")
+        # Aseg迆rate de subir 'logo_lopez.png' a tu GitHub[cite: 3]
+        # Si a迆n no lo subes, puedes comentar la l赤nea de abajo
+        st.image("logo_lopez.png", use_container_width=True)
 
     with col_info:
-        st.subheader("?? Ficha T谷cnica del Developer")
-        st.write(f"**Nombre:** Bill Giner Lopez Milla")
+        st.subheader("Ficha T谷cnica del Proyecto")
+        st.write(f"**Estudiante:** Bill Giner Lopez Milla")
         st.write(f"**Especialidad:** Ingenier赤a de Sistemas")
-        st.write(f"**Sede:** San Mart赤n de Porres, Lima")
+        st.write(f"**Instituci車n:** Universidad de San Mart赤n de Porres (Lima)")
         st.write(f"**M車dulo:** Python Fundamentals & Analytics")
-        st.write(f"**A?o:** 2026")
+        st.write(f"**Tecnolog赤as:** Streamlit, Pandas, NumPy, Plotly")
 
     st.divider()
     
     with st.container():
-        st.markdown("#### ?? Descripci車n del Proyecto")
+        st.markdown("#### Descripci車n de la Arquitectura")
         st.write("""
-        Implementaci車n de una infraestructura digital orientada a la optimizaci車n de procesos. 
-        El sistema utiliza estructuras de datos din芍micas y l車gica de programaci車n avanzada 
-        para la resoluci車n de casos de negocio en entornos de ingenier赤a de sistemas.
+        Esta plataforma representa la implementaci車n de soluciones digitales orientadas a la 
+        optimizaci車n de procesos. A trav谷s de este sistema, se integran estructuras de datos 
+        avanzadas, gesti車n de archivos y programaci車n orientada a objetos para resolver 
+        desaf赤os operativos en entornos de ingenier赤a.
         """)
 
-    st.markdown("#### ??? Tecnolog赤as Utilizadas")
-    st.info("Core: Python 3.x | Data: Pandas & NumPy | Interface: Streamlit Framework")
+# --- SECCI車N 2: EJERCICIO 1 (FLUJO DE CAJA) ---
+elif seccion == "Flujo de Caja":
+    st.title("Gesti車n de Flujo de Caja")
+    st.write("M車dulo dise?ado para el monitoreo de liquidez mediante estructuras de listas din芍micas.")
 
-elif seccion == "Ejercicio 1":
-    st.header("Ejercicio 1 每 Flujo de caja con listas")
-    
-    st.markdown("""
-    Desarrollo de un m車dulo para el registro de movimientos financieros en una lista din芍mica. 
-    Permite el monitoreo de ingresos y gastos para determinar el balance neto de liquidez.
-    """)
+    # Inicializaci車n de memoria de sesi車n para la lista[cite: 3, 6]
+    if "movimientos" not in st.session_state:
+        st.session_state.movimientos = []
 
+    # Interfaz de captura de datos con dise?o de tarjeta (card)
     with st.container(border=True):
+        st.write("##### Registro de Movimiento")
         col_c, col_t, col_m = st.columns([2, 1, 1])
         
         with col_c:
-            concepto = st.text_input("Concepto")
+            concepto = st.text_input("Concepto Operativo", placeholder="Descripci車n de la transacci車n")
         with col_t:
-            tipo = st.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
+            tipo = st.selectbox("Categor赤a", ["Ingreso", "Gasto"])
         with col_m:
-            valor = st.number_input("Valor", min_value=0.0, step=1.0)
+            valor = st.number_input("Monto en Divisa", min_value=0.0, step=1.0)
 
-        if st.button("Agregar movimiento", use_container_width=True):
+        if st.button("Procesar Transacci車n", use_container_width=True):
             if concepto and valor > 0:
+                # Almacenamiento en lista seg迆n requerimiento[cite: 3]
                 st.session_state.movimientos.append({
                     "Concepto": concepto, 
                     "Tipo": tipo, 
-                    "Valor": valor
+                    "Monto": valor
                 })
-                st.toast("Movimiento registrado satisfactoriamente")
+                st.toast("Transacci車n registrada exitosamente")
             else:
-                st.warning("Se requiere una descripci車n y un valor positivo")
+                st.warning("Verifique que el concepto y el monto sean v芍lidos")
 
+    # Visualizaci車n de resultados si existen datos
     if st.session_state.movimientos:
         st.divider()
-        st.write("##### Tabla de movimientos")
         df_movs = pd.DataFrame(st.session_state.movimientos)
-        st.dataframe(df_movs, use_container_width=True, hide_index=True)
+        
+        col_list, col_metrics = st.columns([2, 1])
+        
+        with col_list:
+            st.write("##### Historial Consolidado")
+            st.dataframe(df_movs, use_container_width=True, hide_index=True)
 
-        t_ingresos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
-        t_gastos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
-        saldo_final = t_ingresos - t_gastos
+        with col_metrics:
+            st.write("##### Balance de Situaci車n")
+            t_ingresos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
+            t_gastos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
+            saldo_final = t_ingresos - t_gastos
 
-        st.write("##### Resultado final del flujo de caja")
-        col_m1, col_m2, col_m3 = st.columns(3)
-        col_m1.metric("Total Ingresos", f"{t_ingresos:,.2f}")
-        col_m2.metric("Total Gastos", f"{t_gastos:,.2f}")
-        col_m3.metric("Saldo Final", f"{saldo_final:,.2f}")
+            # M谷tricas profesionales[cite: 3]
+            st.metric("Ingresos Totales", f"{t_ingresos:,.2f}")
+            st.metric("Gastos Totales", f"{t_gastos:,.2f}", delta=f"-{t_gastos:,.2f}", delta_color="inverse")
+            st.metric("Balance Neto", f"{saldo_final:,.2f}")
 
-        if saldo_final > 0:
-            st.success(f"El flujo de caja est芍 a favor: {saldo_final:,.2f}")
-        elif saldo_final < 0:
-            st.error(f"El flujo de caja est芍 en contra: {saldo_final:,.2f}")
-        else:
-            st.info("El flujo de caja se encuentra en equilibrio operativo")
+            if saldo_final > 0:
+                st.success("Estado de Cuenta: Super芍vit")
+            elif saldo_final < 0:
+                st.error("Estado de Cuenta: D谷ficit")
+            else:
+                st.info("Estado de Cuenta: Equilibrio")
             
-        if st.button("Reiniciar registros"):
+        if st.button("Reiniciar Registros"):
             st.session_state.movimientos = []
             st.rerun()
     else:
-        st.info("No se han detectado registros en la sesi車n actual")
+        st.info("No se han detectado transacciones registradas en el sistema")
+
+# Los dem芍s ejercicios se a?adir芍n a continuaci車n...
