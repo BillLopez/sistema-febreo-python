@@ -21,7 +21,7 @@ if "db_actividades" not in st.session_state:
 
 # NAVEGACION Y BRANDING
 with st.sidebar:
-    st.title("Nexus Control")
+    st.title("Panel de Control")
     seccion = st.selectbox(
         "Navegacion Principal",
         ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"]
@@ -55,7 +55,7 @@ if seccion == "Home":
     with st.container(border=True):
         st.subheader("Arquitectura del Proyecto")
         st.write("""
-        Plataforma integral de gestion dise?ada para la optimizacion de recursos y analisis de datos. 
+        Plataforma integral de gestion para la optimizacion de recursos y analisis de datos. 
         Este sistema despliega estructuras de datos avanzadas y programacion orientada a objetos (POO) 
         para resolver problemas complejos de ingenieria mediante una interfaz de usuario minimalista.
         """)
