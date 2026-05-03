@@ -66,7 +66,7 @@ if seccion == "Home":
 
 # SECCION: EJERCICIO 1
 elif seccion == "Ejercicio 1":
-    st.title("?? Ejercicio 1 - Flujo de caja con listas")
+    st.title("Ejercicio 1 - Flujo de caja con listas")
     
     st.info("""
     Desarrollo de un modulo para el registro de movimientos financieros en una lista dinamica. 
@@ -124,7 +124,7 @@ elif seccion == "Ejercicio 1":
 
 # SECCION: EJERCICIO 2
 elif seccion == "Ejercicio 2":
-    st.title("?? Ejercicio 2 - Registro con NumPy y DataFrame")
+    st.title("Ejercicio 2 - Registro con NumPy y DataFrame")
     
     st.info("""
     Formulario para registrar informacion utilizando arreglos de NumPy para el procesamiento de datos 
@@ -175,7 +175,7 @@ elif seccion == "Ejercicio 2":
 
 # SECCION: EJERCICIO 3
 elif seccion == "Ejercicio 3":
-    st.title("?? Ejercicio 3 - Funciones Externas")
+    st.title("Ejercicio 3 - Funciones Externas")
     
     st.info("""
     Implementacion de funciones para el calculo de metricas de rendimiento en sistemas de clasificacion 
@@ -234,7 +234,7 @@ elif seccion == "Ejercicio 3":
 
 # SECCION: EJERCICIO 4
 elif seccion == "Ejercicio 4":
-    st.title("??? Ejercicio 4 - Gestion de Actividades POO")
+    st.title("Ejercicio 4 - Gestion de Actividades POO")
     
     st.info("""
     Sistema de gestion de proyectos basado en Programacion Orientada a Objetos. 
