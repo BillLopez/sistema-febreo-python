@@ -2,20 +2,24 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-# CONFIGURACION
+# CONFIGURACION DE LA INTERFAZ
 st.set_page_config(
     page_title="Sistema Febreo - Bill Lopez", 
     page_icon="??", 
     layout="wide"
 )
 
+# INICIALIZACION DE ESTADOS DE SESION
 if "movimientos" not in st.session_state:
     st.session_state.movimientos = []
 if "db_inventario" not in st.session_state:
     st.session_state.db_inventario = []
 if "historial_metricas" not in st.session_state:
     st.session_state.historial_metricas = []
+if "db_actividades" not in st.session_state:
+    st.session_state.db_actividades = []
 
+# NAVEGACION LATERAL
 with st.sidebar:
     st.title("Panel de Control")
     seccion = st.selectbox(
@@ -27,7 +31,7 @@ with st.sidebar:
     st.caption("Egresado Ingenieria de Sistemas - UNI")
     st.caption("Lima, 2026")
 
-# HOME
+# SECCION: HOME
 if seccion == "Home":
     st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
@@ -60,9 +64,9 @@ if seccion == "Home":
 
     st.success("Core: Python 3.x | Data: Pandas and NumPy | Interface: Streamlit Framework")
 
-# EJERCICIO 1
+# SECCION: EJERCICIO 1
 elif seccion == "Ejercicio 1":
-    st.title("Ejercicio 1 - Flujo de caja con listas")
+    st.title("?? Ejercicio 1 - Flujo de caja con listas")
     
     st.info("""
     Desarrollo de un modulo para el registro de movimientos financieros en una lista dinamica. 
@@ -117,12 +121,10 @@ elif seccion == "Ejercicio 1":
         if st.button("Reiniciar registros"):
             st.session_state.movimientos = []
             st.rerun()
-    else:
-        st.info("No se han detectado registros en la sesion actual")
 
-# EJERCICIO 2
+# SECCION: EJERCICIO 2
 elif seccion == "Ejercicio 2":
-    st.title("Ejercicio 2 - Registro con NumPy y DataFrame")
+    st.title("?? Ejercicio 2 - Registro con NumPy y DataFrame")
     
     st.info("""
     Formulario para registrar informacion utilizando arreglos de NumPy para el procesamiento de datos 
@@ -170,20 +172,17 @@ elif seccion == "Ejercicio 2":
         if st.button("Limpiar inventario"):
             st.session_state.db_inventario = []
             st.rerun()
-    else:
-        st.info("No hay registros en el inventario")
 
-# EJERCICIO 3
+# SECCION: EJERCICIO 3
 elif seccion == "Ejercicio 3":
-    st.title("Ejercicio 3 - Funciones Externas")
+    st.title("?? Ejercicio 3 - Funciones Externas")
     
     st.info("""
     Implementacion de funciones para el calculo de metricas de rendimiento en sistemas de clasificacion 
-    y evaluacion de disponibilidad.
+    y evaluacion de disponibilidad de sistemas de informacion.
     """)
 
     st.header("Selector de Funciones de Analitica")
-    
     opcion_metrica = st.selectbox(
         "Seleccione la metrica a evaluar",
         ["Metricas de Clasificacion (Precision, Recall, F1)", "Disponibilidad de Sistema"]
@@ -193,55 +192,102 @@ elif seccion == "Ejercicio 3":
         if opcion_metrica == "Metricas de Clasificacion (Precision, Recall, F1)":
             st.subheader("Parametros de Matriz de Confusion")
             col_tp, col_fp, col_fn = st.columns(3)
-            with col_tp:
-                tp = st.number_input("Verdaderos Positivos (TP)", min_value=0, step=1)
-            with col_fp:
-                fp = st.number_input("Falsos Positivos (FP)", min_value=0, step=1)
-            with col_fn:
-                fn = st.number_input("Falsos Negativos (FN)", min_value=0, step=1)
+            with col_tp: tp = st.number_input("Verdaderos Positivos (TP)", min_value=0, step=1)
+            with col_fp: fp = st.number_input("Falsos Positivos (FP)", min_value=0, step=1)
+            with col_fn: fn = st.number_input("Falsos Negativos (FN)", min_value=0, step=1)
 
             if st.button("Ejecutar Evaluacion", use_container_width=True):
                 precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
                 recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
                 f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
                 
-                registro = {
-                    "Metrica": "Clasificacion",
-                    "Resultado": f"F1: {f1:.4f}",
+                st.session_state.historial_metricas.append({
+                    "Metrica": "Clasificacion", "Resultado": f"F1: {f1:.4f}",
                     "Timestamp": pd.Timestamp.now().strftime("%H:%M:%S")
-                }
-                st.session_state.historial_metricas.append(registro)
-                st.success("Analisis completado exitosamente")
+                })
+                st.success(f"Analisis completado: F1 Score de {f1:.4f}")
 
         elif opcion_metrica == "Disponibilidad de Sistema":
             st.subheader("Parametros de Tiempo de Actividad")
             col_tt, col_tc = st.columns(2)
-            with col_tt:
-                t_total = st.number_input("Tiempo Total (horas)", min_value=1.0, step=1.0)
-            with col_tc:
-                t_caida = st.number_input("Tiempo de Caida (horas)", min_value=0.0, step=0.1)
+            with col_tt: t_total = st.number_input("Tiempo Total (horas)", min_value=1.0, step=1.0)
+            with col_tc: t_caida = st.number_input("Tiempo de Caida (horas)", min_value=0.0, step=0.1)
 
             if st.button("Calcular Disponibilidad", use_container_width=True):
                 if t_caida <= t_total:
                     disp = ((t_total - t_caida) / t_total) * 100
-                    registro = {
-                        "Metrica": "Disponibilidad",
-                        "Resultado": f"{disp:.2f}%",
+                    st.session_state.historial_metricas.append({
+                        "Metrica": "Disponibilidad", "Resultado": f"{disp:.2f}%",
                         "Timestamp": pd.Timestamp.now().strftime("%H:%M:%S")
-                    }
-                    st.session_state.historial_metricas.append(registro)
-                    st.success("Calculo finalizado exitosamente")
+                    })
+                    st.success(f"Calculo finalizado: {disp:.2f}%")
                 else:
                     st.error("Error: El tiempo de caida excede el tiempo total")
 
     if st.session_state.historial_metricas:
         st.divider()
         st.subheader("Tabla historica de resultados")
-        df_hist = pd.DataFrame(st.session_state.historial_metricas)
-        st.dataframe(df_hist, use_container_width=True, hide_index=True)
-        
+        st.dataframe(pd.DataFrame(st.session_state.historial_metricas), use_container_width=True, hide_index=True)
         if st.button("Limpiar historico"):
             st.session_state.historial_metricas = []
             st.rerun()
-    else:
-        st.info("No se han registrado ejecuciones de funciones")
+
+# SECCION: EJERCICIO 4
+elif seccion == "Ejercicio 4":
+    st.title("??? Ejercicio 4 - Gestion de Actividades POO")
+    
+    st.info("""
+    Sistema de gestion de proyectos basado en Programacion Orientada a Objetos. 
+    Permite administrar el ciclo de vida completo de actividades mediante operaciones CRUD.
+    """)
+
+    class Actividad:
+        def __init__(self, nombre, tipo, presupuesto, gasto_real):
+            self.nombre, self.tipo, self.presupuesto, self.gasto_real = nombre, tipo, presupuesto, gasto_real
+        def esta_en_presupuesto(self): return self.gasto_real <= self.presupuesto
+
+    tab_crear, tab_leer, tab_update, tab_delete = st.tabs(["Crear", "Visualizar", "Actualizar", "Eliminar"])
+
+    with tab_crear:
+        st.header("Registro de Nueva Actividad")
+        with st.container(border=True):
+            c1, c2 = st.columns(2)
+            with c1:
+                nom = st.text_input("Nombre de la actividad")
+                tip = st.selectbox("Tipo de recurso", ["Personal", "Equipos", "Materiales", "Logistica"])
+            with c2:
+                pre = st.number_input("Presupuesto asignado", min_value=0.0)
+                gas = st.number_input("Gasto ejecutado", min_value=0.0)
+            if st.button("Guardar Actividad", use_container_width=True):
+                if nom:
+                    st.session_state.db_actividades.append(Actividad(nom, tip, pre, gas))
+                    st.toast("Actividad guardada")
+                else: st.error("Nombre obligatorio")
+
+    with tab_leer:
+        st.header("Listado Maestro")
+        if st.session_state.db_actividades:
+            data = [{"Actividad": a.nombre, "Tipo": a.tipo, "Presupuesto": a.presupuesto, "Gasto": a.gasto_real, "Estado": "OK" if a.esta_en_presupuesto() else "Excedido"} for a in st.session_state.db_actividades]
+            st.dataframe(pd.DataFrame(data), use_container_width=True, hide_index=True)
+        else: st.info("Sin registros")
+
+    with tab_update:
+        st.header("Edicion de Gastos")
+        if st.session_state.db_actividades:
+            seleccion = st.selectbox("Seleccione actividad", [a.nombre for a in st.session_state.db_actividades])
+            nuevo_valor = st.number_input("Actualizar Gasto Real", min_value=0.0)
+            if st.button("Aplicar Cambios", use_container_width=True):
+                for a in st.session_state.db_actividades:
+                    if a.nombre == seleccion:
+                        a.gasto_real = nuevo_valor
+                        st.rerun()
+        else: st.warning("Sin datos")
+
+    with tab_delete:
+        st.header("Remover Actividad")
+        if st.session_state.db_actividades:
+            seleccion_del = st.selectbox("Seleccione actividad para borrar", [a.nombre for a in st.session_state.db_actividades])
+            if st.button("Confirmar Eliminacion", use_container_width=True):
+                st.session_state.db_actividades = [a for a in st.session_state.db_actividades if a.nombre != seleccion_del]
+                st.rerun()
+        else: st.warning("Sin datos")
