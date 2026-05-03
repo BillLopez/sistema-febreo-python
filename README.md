@@ -1,4 +1,4 @@
-git clone https://github.com/tu-usuario/nexus-systems-python.git
+git clone [https://github.com/tu-usuario/nexus-systems-python.git](https://github.com/BillLopez/sistema-febreo-python)
     ```
 2.  **Instalar dependencias:**
     ```bash
