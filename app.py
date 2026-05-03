@@ -1,123 +1,113 @@
 import streamlit as st
 import pandas as pd
 
-# Configuraci車n de p芍gina con identidad profesional
 st.set_page_config(
-    page_title="Sistema Febreo - Anal赤tica", 
+    page_title="Sistema Febreo - Bill Lopez", 
     page_icon="??", 
     layout="wide"
 )
 
-# --- NAVEGACI車N LATERAL ---
+if "movimientos" not in st.session_state:
+    st.session_state.movimientos = []
+
 with st.sidebar:
     st.title("Panel de Control")
-    # Navegaci車n basada en los requisitos de la gu赤a
     seccion = st.selectbox(
-        "Navegaci車n Principal",
-        ["Inicio", "Flujo de Caja", "Inventario NumPy", "Librer赤a Funciones", "Gesti車n POO"]
+        "Navegacion Principal",
+        ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"]
     )
     st.divider()
-    st.caption("Consultor: Bill Giner Lopez Milla")
-    st.caption("Egresado Ingenier赤a de Sistemas - USMP")
-    st.caption("Ciclo Acad谷mico 2026")
+    st.caption("Developer: Bill Giner Lopez Milla")
+    st.caption("Egresado Ingenieria de Sistemas - USMP")
+    st.caption("Ciclo Academico 2026")
 
-# --- SECCI車N 1: INICIO (HOME) ---
-if seccion == "Inicio":
-    st.title("PySistemas Analytics: Plataforma de Gesti車n Febreo")
+if seccion == "Home":
+    st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
     
     with col_img:
-        # Aseg迆rate de subir 'logo_lopez.png' a tu GitHub[cite: 3]
-        # Si a迆n no lo subes, puedes comentar la l赤nea de abajo
-        st.image("logo_lopez.png", use_container_width=True)
+        try:
+            st.image("logo_lopez.png", use_container_width=True)
+        except:
+            st.warning("Archivo logo_lopez.png no hallado en el repositorio")
 
     with col_info:
-        st.subheader("Ficha T谷cnica del Proyecto")
-        st.write(f"**Estudiante:** Bill Giner Lopez Milla")
-        st.write(f"**Especialidad:** Ingenier赤a de Sistemas")
-        st.write(f"**Instituci車n:** Universidad de San Mart赤n de Porres (Lima)")
-        st.write(f"**M車dulo:** Python Fundamentals & Analytics")
-        st.write(f"**Tecnolog赤as:** Streamlit, Pandas, NumPy, Plotly")
+        st.subheader("?? Ficha Tecnica del Developer")
+        st.write(f"**Nombre:** Bill Giner Lopez Milla")
+        st.write(f"**Especialidad:** Ingenieria de Sistemas")
+        st.write(f"**Sede:** San Martin de Porres, Lima")
+        st.write(f"**Modulo:** Python Fundamentals & Analytics")
+        st.write(f"**A?o:** 2026")
 
     st.divider()
     
     with st.container():
-        st.markdown("#### Descripci車n de la Arquitectura")
+        st.markdown("#### ?? Descripcion del Proyecto")
         st.write("""
-        Esta plataforma representa la implementaci車n de soluciones digitales orientadas a la 
-        optimizaci車n de procesos. A trav谷s de este sistema, se integran estructuras de datos 
-        avanzadas, gesti車n de archivos y programaci車n orientada a objetos para resolver 
-        desaf赤os operativos en entornos de ingenier赤a.
+        Implementacion de una infraestructura digital orientada a la optimizacion de procesos. 
+        El sistema utiliza estructuras de datos dinamicas y logica de programaci車n avanzada 
+        para la resolucion de casos de negocio en entornos de ingenieria de sistemas.
         """)
 
-# --- SECCI車N 2: EJERCICIO 1 (FLUJO DE CAJA) ---
-elif seccion == "Flujo de Caja":
-    st.title("Gesti車n de Flujo de Caja")
-    st.write("M車dulo dise?ado para el monitoreo de liquidez mediante estructuras de listas din芍micas.")
+    st.markdown("#### ??? Tecnologias Utilizadas")
+    st.info("Core: Python 3.x | Data: Pandas & NumPy | Interface: Streamlit Framework")
 
-    # Inicializaci車n de memoria de sesi車n para la lista[cite: 3, 6]
-    if "movimientos" not in st.session_state:
-        st.session_state.movimientos = []
+elif seccion == "Ejercicio 1":
+    st.header("Ejercicio 1 每 Flujo de caja con listas")
+    
+    st.markdown("""
+    Desarrollo de un modulo para el registro de movimientos financieros en una lista dinamica. 
+    Permite el monitoreo de ingresos y gastos para determinar el balance neto de liquidez.
+    """)
 
-    # Interfaz de captura de datos con dise?o de tarjeta (card)
     with st.container(border=True):
-        st.write("##### Registro de Movimiento")
         col_c, col_t, col_m = st.columns([2, 1, 1])
         
         with col_c:
-            concepto = st.text_input("Concepto Operativo", placeholder="Descripci車n de la transacci車n")
+            concepto = st.text_input("Concepto")
         with col_t:
-            tipo = st.selectbox("Categor赤a", ["Ingreso", "Gasto"])
+            tipo = st.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         with col_m:
-            valor = st.number_input("Monto en Divisa", min_value=0.0, step=1.0)
+            valor = st.number_input("Valor", min_value=0.0, step=1.0)
 
-        if st.button("Procesar Transacci車n", use_container_width=True):
+        if st.button("Agregar movimiento", use_container_width=True):
             if concepto and valor > 0:
-                # Almacenamiento en lista seg迆n requerimiento[cite: 3]
                 st.session_state.movimientos.append({
                     "Concepto": concepto, 
                     "Tipo": tipo, 
-                    "Monto": valor
+                    "Valor": valor
                 })
-                st.toast("Transacci車n registrada exitosamente")
+                st.toast("Movimiento registrado")
             else:
-                st.warning("Verifique que el concepto y el monto sean v芍lidos")
+                st.warning("Se requiere una descripcion y un valor positivo")
 
-    # Visualizaci車n de resultados si existen datos
     if st.session_state.movimientos:
         st.divider()
+        st.write("##### Tabla de movimientos")
         df_movs = pd.DataFrame(st.session_state.movimientos)
-        
-        col_list, col_metrics = st.columns([2, 1])
-        
-        with col_list:
-            st.write("##### Historial Consolidado")
-            st.dataframe(df_movs, use_container_width=True, hide_index=True)
+        st.dataframe(df_movs, use_container_width=True, hide_index=True)
 
-        with col_metrics:
-            st.write("##### Balance de Situaci車n")
-            t_ingresos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
-            t_gastos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
-            saldo_final = t_ingresos - t_gastos
+        t_ingresos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
+        t_gastos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
+        saldo_final = t_ingresos - t_gastos
 
-            # M谷tricas profesionales[cite: 3]
-            st.metric("Ingresos Totales", f"{t_ingresos:,.2f}")
-            st.metric("Gastos Totales", f"{t_gastos:,.2f}", delta=f"-{t_gastos:,.2f}", delta_color="inverse")
-            st.metric("Balance Neto", f"{saldo_final:,.2f}")
+        st.write("##### Resultado final del flujo de caja")
+        col_m1, col_m2, col_m3 = st.columns(3)
+        col_m1.metric("Total Ingresos", f"{t_ingresos:,.2f}")
+        col_m2.metric("Total Gastos", f"{t_gastos:,.2f}")
+        col_m3.metric("Saldo Final", f"{saldo_final:,.2f}")
 
-            if saldo_final > 0:
-                st.success("Estado de Cuenta: Super芍vit")
-            elif saldo_final < 0:
-                st.error("Estado de Cuenta: D谷ficit")
-            else:
-                st.info("Estado de Cuenta: Equilibrio")
+        if saldo_final > 0:
+            st.success(f"El flujo de caja esta a favor: {saldo_final:,.2f}")
+        elif saldo_final < 0:
+            st.error(f"El flujo de caja esta en contra: {saldo_final:,.2f}")
+        else:
+            st.info("El flujo de caja se encuentra en equilibrio")
             
-        if st.button("Reiniciar Registros"):
+        if st.button("Reiniciar registros"):
             st.session_state.movimientos = []
             st.rerun()
     else:
-        st.info("No se han detectado transacciones registradas en el sistema")
-
-# Los dem芍s ejercicios se a?adir芍n a continuaci車n...
+        st.info("No se han detectado registros en la sesion actual")
