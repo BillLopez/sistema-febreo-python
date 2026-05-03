@@ -1,22 +1,5 @@
-git clone [https://github.com/tu-usuario/nexus-systems-python.git](https://github.com/BillLopez/sistema-febreo-python)
-    ```
-2.  **Instalar dependencias:**
-    ```bash
-    pip install streamlit pandas numpy
-    ```
-3.  **Correr la aplicación:**
-    ```bash
-    streamlit run app.py
-    ```
-
----
-
 ## 🔗 Enlaces de Interés
-*   **Para que tu repositorio de GitHub tenga un nivel profesional acorde a un egresado de la **UNI**, el archivo `README.md` debe funcionar como la carta de presentación técnica de tu proyecto. Este archivo es lo primero que verá el evaluador y debe explicar claramente qué hace la aplicación y cómo está construida.
-
-Aquí tienes una estructura recomendada que puedes copiar y adaptar:
-
----
+git clone [https://github.com/tu-usuario/nexus-systems-python.git](https://github.com/BillLopez/sistema-febreo-python)
 
 # 🖥️ Nexus Systems: Advanced Management Suite
 
