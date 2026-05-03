@@ -33,7 +33,7 @@ with st.sidebar:
 
 # SECCION: HOME
 if seccion == "Home":
-    st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
+    st.title("PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
