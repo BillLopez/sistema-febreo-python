@@ -49,7 +49,6 @@ if seccion == "Home":
         st.write(f"**Formacion:** Ingenieria de Sistemas - UNI")
         st.write(f"**Ubicacion:** San Martin de Porres, Lima")
         st.write(f"**Especialidad:** Python Fundamentals and Analytics")
-        st.write(f"**Version:** 2.0 (Stable)")
 
     st.divider()
     with st.container(border=True):
