@@ -27,7 +27,7 @@ with st.sidebar:
 
 # HOME
 if seccion == "Home":
-    st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
+    st.title("PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
@@ -39,7 +39,7 @@ if seccion == "Home":
             st.warning("Archivo logo_lopez.png no hallado en el repositorio")
 
     with col_info:
-        st.subheader("?? Ficha Tecnica del Developer")
+        st.subheader("Ficha Tecnica del Developer")
         st.write(f"**Nombre:** Bill Giner Lopez Milla")
         st.write(f"**Especialidad:** Ingenieria de Sistemas")
         st.write(f"**Residencia:** San Martin de Porres, Lima")
@@ -49,7 +49,7 @@ if seccion == "Home":
     st.divider()
     
     with st.container():
-        st.markdown("#### ?? Descripcion del Proyecto")
+        st.markdown("####Descripcion del Proyecto")
         st.write("""
         Implementacion de una infraestructura digital orientada a la optimizacion de procesos. 
         El sistema utiliza estructuras de datos dinamicas y logica de calculo avanzada 
