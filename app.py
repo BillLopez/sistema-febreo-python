@@ -18,7 +18,7 @@ with st.sidebar:
     )
     st.divider()
     st.caption("Developer: Bill Giner Lopez Milla")
-    st.caption("Egresado Ingenier¨ªa de Sistemas - USMP")
+    st.caption("Egresado Ingenier¨ªa de Sistemas - UNI")
     st.caption("Ciclo Acad¨¦mico 2026")
 
 if seccion == "Home":
@@ -31,7 +31,7 @@ if seccion == "Home":
         try:
             st.image("logo_lopez.png", use_container_width=True)
         except:
-            st.warning("Archivo de imagen no detectado en el repositorio")
+            st.warning("Archivo logo_lopez.png no hallado en el repositorio")
 
     with col_info:
         st.subheader("?? Ficha T¨¦cnica del Developer")
@@ -79,9 +79,9 @@ elif seccion == "Ejercicio 1":
                     "Tipo": tipo, 
                     "Valor": valor
                 })
-                st.toast("Movimiento registrado")
+                st.toast("Movimiento registrado satisfactoriamente")
             else:
-                st.warning("Se requiere concepto y valor v¨¢lido")
+                st.warning("Se requiere una descripci¨®n y un valor positivo")
 
     if st.session_state.movimientos:
         st.divider()
@@ -104,10 +104,10 @@ elif seccion == "Ejercicio 1":
         elif saldo_final < 0:
             st.error(f"El flujo de caja est¨¢ en contra: {saldo_final:,.2f}")
         else:
-            st.info("El flujo de caja est¨¢ en equilibrio")
+            st.info("El flujo de caja se encuentra en equilibrio operativo")
             
-        if st.button("Limpiar historial"):
+        if st.button("Reiniciar registros"):
             st.session_state.movimientos = []
             st.rerun()
     else:
-        st.info("No se han detectado movimientos registrados")
+        st.info("No se han detectado registros en la sesi¨®n actual")
