@@ -13,6 +13,8 @@ if "movimientos" not in st.session_state:
     st.session_state.movimientos = []
 if "db_inventario" not in st.session_state:
     st.session_state.db_inventario = []
+if "historial_metricas" not in st.session_state:
+    st.session_state.historial_metricas = []
 
 with st.sidebar:
     st.title("Panel de Control")
@@ -23,11 +25,11 @@ with st.sidebar:
     st.divider()
     st.caption("Developer: Bill Giner Lopez Milla")
     st.caption("Egresado Ingenieria de Sistemas - UNI")
-    st.caption("Ciclo Academico 2026")
+    st.caption("Lima, 2026")
 
 # HOME
 if seccion == "Home":
-    st.title("PySistemas Analytics: Plataforma de Gestion Febreo")
+    st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
@@ -39,7 +41,7 @@ if seccion == "Home":
             st.warning("Archivo logo_lopez.png no hallado en el repositorio")
 
     with col_info:
-        st.subheader("Ficha Tecnica del Developer")
+        st.header("Ficha Tecnica del Developer")
         st.write(f"**Nombre:** Bill Giner Lopez Milla")
         st.write(f"**Especialidad:** Ingenieria de Sistemas")
         st.write(f"**Residencia:** San Martin de Porres, Lima")
@@ -49,26 +51,26 @@ if seccion == "Home":
     st.divider()
     
     with st.container():
-        st.markdown("####Descripcion del Proyecto")
+        st.subheader("Descripcion del Proyecto")
         st.write("""
         Implementacion de una infraestructura digital orientada a la optimizacion de procesos. 
         El sistema utiliza estructuras de datos dinamicas y logica de calculo avanzada 
         para la resolucion de casos de negocio en entornos de ingenieria de sistemas.
         """)
 
-    st.markdown("#### ??? Tecnologias Utilizadas")
-    st.info("Core: Python 3.x | Data: Pandas and NumPy | Interface: Streamlit Framework")
+    st.success("Core: Python 3.x | Data: Pandas and NumPy | Interface: Streamlit Framework")
 
 # EJERCICIO 1
 elif seccion == "Ejercicio 1":
-    st.header("Ejercicio 1 - Flujo de caja con listas")
+    st.title("Ejercicio 1 - Flujo de caja con listas")
     
-    st.markdown("""
+    st.info("""
     Desarrollo de un modulo para el registro de movimientos financieros en una lista dinamica. 
     Permite el monitoreo de ingresos y gastos para determinar el balance neto de liquidez.
     """)
 
     with st.container(border=True):
+        st.header("Entrada de Datos Financieros")
         col_c, col_t, col_m = st.columns([2, 1, 1])
         
         with col_c:
@@ -91,7 +93,7 @@ elif seccion == "Ejercicio 1":
 
     if st.session_state.movimientos:
         st.divider()
-        st.write("##### Tabla de movimientos")
+        st.subheader("Tabla de movimientos")
         df_movs = pd.DataFrame(st.session_state.movimientos)
         st.dataframe(df_movs, use_container_width=True, hide_index=True)
 
@@ -99,7 +101,7 @@ elif seccion == "Ejercicio 1":
         t_gastos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
         saldo_final = t_ingresos - t_gastos
 
-        st.write("##### Resultado final del flujo de caja")
+        st.header("Resultado final del flujo de caja")
         col_m1, col_m2, col_m3 = st.columns(3)
         col_m1.metric("Total Ingresos", f"{t_ingresos:,.2f}")
         col_m2.metric("Total Gastos", f"{t_gastos:,.2f}")
@@ -110,7 +112,7 @@ elif seccion == "Ejercicio 1":
         elif saldo_final < 0:
             st.error(f"El flujo de caja esta en contra: {saldo_final:,.2f}")
         else:
-            st.info("El flujo de caja se encuentra en equilibrio")
+            st.warning("El flujo de caja se encuentra en equilibrio")
             
         if st.button("Reiniciar registros"):
             st.session_state.movimientos = []
@@ -120,14 +122,15 @@ elif seccion == "Ejercicio 1":
 
 # EJERCICIO 2
 elif seccion == "Ejercicio 2":
-    st.header("Ejercicio 2 - Registro con NumPy, arrays y DataFrame")
+    st.title("Ejercicio 2 - Registro con NumPy y DataFrame")
     
-    st.markdown("""
+    st.info("""
     Formulario para registrar informacion utilizando arreglos de NumPy para el procesamiento de datos 
     antes de su conversion a un DataFrame actualizado.
     """)
 
     with st.container(border=True):
+        st.header("Captura de Activos")
         col_n, col_cat = st.columns(2)
         with col_n:
             nombre_p = st.text_input("Nombre del producto")
@@ -151,6 +154,7 @@ elif seccion == "Ejercicio 2":
 
     if st.session_state.db_inventario:
         st.divider()
+        st.subheader("Tabla de inventario actualizada")
         columnas = ["Producto", "Categoria", "Precio", "Cantidad", "Total"]
         df_inventario = pd.DataFrame(st.session_state.db_inventario, columns=columnas)
         
@@ -158,14 +162,86 @@ elif seccion == "Ejercicio 2":
         df_inventario["Cantidad"] = pd.to_numeric(df_inventario["Cantidad"])
         df_inventario["Total"] = pd.to_numeric(df_inventario["Total"])
         
-        st.write("##### Tabla de inventario actualizada")
         st.dataframe(df_inventario, use_container_width=True, hide_index=True)
         
         valor_total_stock = np.sum(df_inventario["Total"].values)
-        st.info(f"Valorizacion total del inventario: {valor_total_stock:,.2f}")
+        st.success(f"Valorizacion total del inventario: {valor_total_stock:,.2f}")
         
         if st.button("Limpiar inventario"):
             st.session_state.db_inventario = []
             st.rerun()
     else:
         st.info("No hay registros en el inventario")
+
+# EJERCICIO 3
+elif seccion == "Ejercicio 3":
+    st.title("Ejercicio 3 - Funciones Externas")
+    
+    st.info("""
+    Implementacion de funciones para el calculo de metricas de rendimiento en sistemas de clasificacion 
+    y evaluacion de disponibilidad.
+    """)
+
+    st.header("Selector de Funciones de Analitica")
+    
+    opcion_metrica = st.selectbox(
+        "Seleccione la metrica a evaluar",
+        ["Metricas de Clasificacion (Precision, Recall, F1)", "Disponibilidad de Sistema"]
+    )
+
+    with st.container(border=True):
+        if opcion_metrica == "Metricas de Clasificacion (Precision, Recall, F1)":
+            st.subheader("Parametros de Matriz de Confusion")
+            col_tp, col_fp, col_fn = st.columns(3)
+            with col_tp:
+                tp = st.number_input("Verdaderos Positivos (TP)", min_value=0, step=1)
+            with col_fp:
+                fp = st.number_input("Falsos Positivos (FP)", min_value=0, step=1)
+            with col_fn:
+                fn = st.number_input("Falsos Negativos (FN)", min_value=0, step=1)
+
+            if st.button("Ejecutar Evaluacion", use_container_width=True):
+                precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+                recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+                f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
+                
+                registro = {
+                    "Metrica": "Clasificacion",
+                    "Resultado": f"F1: {f1:.4f}",
+                    "Timestamp": pd.Timestamp.now().strftime("%H:%M:%S")
+                }
+                st.session_state.historial_metricas.append(registro)
+                st.success("Analisis completado exitosamente")
+
+        elif opcion_metrica == "Disponibilidad de Sistema":
+            st.subheader("Parametros de Tiempo de Actividad")
+            col_tt, col_tc = st.columns(2)
+            with col_tt:
+                t_total = st.number_input("Tiempo Total (horas)", min_value=1.0, step=1.0)
+            with col_tc:
+                t_caida = st.number_input("Tiempo de Caida (horas)", min_value=0.0, step=0.1)
+
+            if st.button("Calcular Disponibilidad", use_container_width=True):
+                if t_caida <= t_total:
+                    disp = ((t_total - t_caida) / t_total) * 100
+                    registro = {
+                        "Metrica": "Disponibilidad",
+                        "Resultado": f"{disp:.2f}%",
+                        "Timestamp": pd.Timestamp.now().strftime("%H:%M:%S")
+                    }
+                    st.session_state.historial_metricas.append(registro)
+                    st.success("Calculo finalizado exitosamente")
+                else:
+                    st.error("Error: El tiempo de caida excede el tiempo total")
+
+    if st.session_state.historial_metricas:
+        st.divider()
+        st.subheader("Tabla historica de resultados")
+        df_hist = pd.DataFrame(st.session_state.historial_metricas)
+        st.dataframe(df_hist, use_container_width=True, hide_index=True)
+        
+        if st.button("Limpiar historico"):
+            st.session_state.historial_metricas = []
+            st.rerun()
+    else:
+        st.info("No se han registrado ejecuciones de funciones")
