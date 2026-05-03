@@ -22,7 +22,7 @@ with st.sidebar:
     st.caption("Ciclo Academico 2026")
 
 if seccion == "Home":
-    st.title("?? PySistemas Analytics: Plataforma de Gestion Febreo")
+    st.title("PySistemas Analytics: Plataforma de Gestion Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
@@ -34,28 +34,28 @@ if seccion == "Home":
             st.warning("Archivo logo_lopez.png no hallado en el repositorio")
 
     with col_info:
-        st.subheader("?? Ficha Tecnica del Developer")
+        st.subheader("Ficha Tecnica del Developer")
         st.write(f"**Nombre:** Bill Giner Lopez Milla")
         st.write(f"**Especialidad:** Ingenieria de Sistemas")
         st.write(f"**Sede:** San Martin de Porres, Lima")
-        st.write(f"**Modulo:** Python Fundamentals & Analytics")
-        st.write(f"**A?o:** 2026")
+        st.write(f"**Modulo:** Python Fundamentals and Analytics")
+        st.write(f"**Anio:** 2026")
 
     st.divider()
     
     with st.container():
-        st.markdown("#### ?? Descripcion del Proyecto")
+        st.markdown("#### Descripcion del Proyecto")
         st.write("""
         Implementacion de una infraestructura digital orientada a la optimizacion de procesos. 
-        El sistema utiliza estructuras de datos dinamicas y logica de programaci¨®n avanzada 
+        El sistema utiliza estructuras de datos dinamicas y logica de calculo avanzada 
         para la resolucion de casos de negocio en entornos de ingenieria de sistemas.
         """)
 
-    st.markdown("#### ??? Tecnologias Utilizadas")
-    st.info("Core: Python 3.x | Data: Pandas & NumPy | Interface: Streamlit Framework")
+    st.markdown("#### Tecnologias Utilizadas")
+    st.info("Core: Python 3.x | Data: Pandas and NumPy | Interface: Streamlit Framework")
 
 elif seccion == "Ejercicio 1":
-    st.header("Ejercicio 1 ¨C Flujo de caja con listas")
+    st.header("Ejercicio 1 - Flujo de caja con listas")
     
     st.markdown("""
     Desarrollo de un modulo para el registro de movimientos financieros en una lista dinamica. 
