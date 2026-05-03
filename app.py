@@ -180,7 +180,7 @@ elif seccion == "Ejercicio 4":
             self.nom, self.tip, self.pre, self.gas = nom, tip, pre, gas
         def estado(self): return "OK" if self.gas <= self.pre else "Excedido"
 
-    t_add, t_view, t_mod, t_del = st.tabs(["A?adir", "Consultar", "Modificar", "Remover"])
+    t_add, t_view, t_mod, t_del = st.tabs(["Anadir", "Consultar", "Modificar", "Remover"])
 
     with t_add:
         st.header("Registro de Nueva Actividad")
