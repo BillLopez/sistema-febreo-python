@@ -18,7 +18,7 @@ with st.sidebar:
     )
     st.divider()
     st.caption("Developer: Bill Giner Lopez Milla")
-    st.caption("Egresado Ingenier¨ªa de Sistemas - UNI")
+    st.caption("Egresado Ingenier¨ªa de Sistemas - USMP")
     st.caption("Ciclo Acad¨¦mico 2026")
 
 if seccion == "Home":
@@ -28,13 +28,16 @@ if seccion == "Home":
     col_img, col_info = st.columns([1, 2])
     
     with col_img:
-        st.image("logo_lopez.png", use_container_width=True)
+        try:
+            st.image("logo_lopez.png", use_container_width=True)
+        except:
+            st.warning("Archivo de imagen no detectado en el repositorio")
 
     with col_info:
         st.subheader("?? Ficha T¨¦cnica del Developer")
         st.write(f"**Nombre:** Bill Giner Lopez Milla")
         st.write(f"**Especialidad:** Ingenier¨ªa de Sistemas")
-        st.write(f"**Residencia:** San Mart¨ªn de Porres, Lima")
+        st.write(f"**Sede:** San Mart¨ªn de Porres, Lima")
         st.write(f"**M¨®dulo:** Python Fundamentals & Analytics")
         st.write(f"**A?o:** 2026")
 
@@ -76,9 +79,9 @@ elif seccion == "Ejercicio 1":
                     "Tipo": tipo, 
                     "Valor": valor
                 })
-                st.toast("Movimiento agregado")
+                st.toast("Movimiento registrado")
             else:
-                st.warning("Ingrese un concepto y valor v¨¢lido")
+                st.warning("Se requiere concepto y valor v¨¢lido")
 
     if st.session_state.movimientos:
         st.divider()
@@ -107,4 +110,4 @@ elif seccion == "Ejercicio 1":
             st.session_state.movimientos = []
             st.rerun()
     else:
-        st.info("No hay movimientos registrados")
+        st.info("No se han detectado movimientos registrados")
