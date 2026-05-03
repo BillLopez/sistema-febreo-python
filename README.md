@@ -1,7 +1,7 @@
 ## 🔗 Enlaces de Interés
 git clone [https://github.com/tu-usuario/nexus-systems-python.git](https://github.com/BillLopez/sistema-febreo-python)
 
-# 🖥️ Nexus Systems: Advanced Management Suite
+# 🖥️ Systems: Advanced Management Suite
 
 ### **Especialización en Python for Analytics - Edición 57**
 **Proyecto 1: Aplicación Integral de Gestión con Streamlit**
