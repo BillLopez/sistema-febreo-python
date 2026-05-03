@@ -2,25 +2,27 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(
-    page_title="Sistema Febreo - Anal铆tica", 
-    page_icon="馃搳", 
+    page_title="Sistema Febreo - Bill Lopez", 
+    page_icon="??", 
     layout="wide"
 )
+
+if "movimientos" not in st.session_state:
+    st.session_state.movimientos = []
 
 with st.sidebar:
     st.title("Panel de Control")
     seccion = st.selectbox(
-        "Navegaci贸n Principal",
-        ["Inicio", "Flujo de Caja", "Inventario NumPy", "Librer铆a Funciones", "Gesti贸n POO"]
+        "Navegación Principal",
+        ["Home", "Ejercicio 1", "Ejercicio 2", "Ejercicio 3", "Ejercicio 4"]
     )
     st.divider()
-    st.caption("Consultor: Bill Giner Lopez Milla")
-    st.caption("Egresado Ingenier铆a de Sistemas - USMP")
-    st.caption("Ciclo Acad茅mico 2026")
+    st.caption("Developer: Bill Giner Lopez Milla")
+    st.caption("Egresado Ingeniería de Sistemas - UNI")
+    st.caption("Ciclo Académico 2026")
 
-# HOME
-if seccion == "Inicio":
-    st.title("PySistemas Analytics: Plataforma de Gesti贸n Febreo")
+if seccion == "Home":
+    st.title("?? PySistemas Analytics: Plataforma de Gestión Febreo")
     st.divider()
     
     col_img, col_info = st.columns([1, 2])
@@ -29,86 +31,80 @@ if seccion == "Inicio":
         st.image("logo_lopez.png", use_container_width=True)
 
     with col_info:
-        st.subheader("Ficha T茅cnica del Proyecto")
-        st.write(f"**Estudiante:** Bill Giner Lopez Milla")
-        st.write(f"**Especialidad:** Ingenier铆a de Sistemas")
-        st.write(f"**Instituci贸n:** Universidad Nacional de Ingenier铆a (Lima)")
-        st.write(f"**M贸dulo:** Python Fundamentals & Analytics")
-        st.write(f"**Tecnolog铆as:** Streamlit, Pandas, NumPy, Plotly")
+        st.subheader("?? Ficha Técnica del Developer")
+        st.write(f"**Nombre:** Bill Giner Lopez Milla")
+        st.write(f"**Especialidad:** Ingeniería de Sistemas")
+        st.write(f"**Residencia:** San Martín de Porres, Lima")
+        st.write(f"**Módulo:** Python Fundamentals & Analytics")
+        st.write(f"**A?o:** 2026")
 
     st.divider()
     
     with st.container():
-        st.markdown("#### Descripci贸n de la Arquitectura")
+        st.markdown("#### ?? Descripción del Proyecto")
         st.write("""
-        Esta plataforma representa la implementaci贸n de soluciones digitales orientadas a la 
-        optimizaci贸n de procesos. A trav茅s de este sistema, se integran estructuras de datos 
-        avanzadas, gesti贸n de archivos y programaci贸n orientada a objetos para resolver 
-        desaf铆os operativos en entornos de ingenier铆a.
+        Implementación de una infraestructura digital orientada a la optimización de procesos. 
+        El sistema utiliza estructuras de datos dinámicas y lógica de programación avanzada 
+        para la resolución de casos de negocio en entornos de ingeniería de sistemas.
         """)
 
-# EJERCICIO 1:
-elif seccion == "Flujo de Caja":
-    st.title("Gesti贸n de Flujo de Caja")
-    st.write("M贸dulo dise帽ado para el monitoreo de liquidez mediante estructuras de listas din谩micas.")
+    st.markdown("#### ??? Tecnologías Utilizadas")
+    st.info("Core: Python 3.x | Data: Pandas & NumPy | Interface: Streamlit Framework")
 
-    if "movimientos" not in st.session_state:
-        st.session_state.movimientos = []
+elif seccion == "Ejercicio 1":
+    st.header("Ejercicio 1 – Flujo de caja con listas")
+    
+    st.markdown("""
+    Desarrollo de un módulo para el registro de movimientos financieros en una lista dinámica. 
+    Permite el monitoreo de ingresos y gastos para determinar el balance neto de liquidez.
+    """)
 
     with st.container(border=True):
-        st.write("##### Registro de Movimiento")
         col_c, col_t, col_m = st.columns([2, 1, 1])
         
         with col_c:
-            concepto = st.text_input("Concepto Operativo", placeholder="Descripci贸n de la transacci贸n")
+            concepto = st.text_input("Concepto")
         with col_t:
-            tipo = st.selectbox("Categor铆a", ["Ingreso", "Gasto"])
+            tipo = st.selectbox("Tipo de movimiento", ["Ingreso", "Gasto"])
         with col_m:
-            valor = st.number_input("Monto en Divisa", min_value=0.0, step=1.0)
+            valor = st.number_input("Valor", min_value=0.0, step=1.0)
 
-        if st.button("Procesar Transacci贸n", use_container_width=True):
+        if st.button("Agregar movimiento", use_container_width=True):
             if concepto and valor > 0:
                 st.session_state.movimientos.append({
                     "Concepto": concepto, 
                     "Tipo": tipo, 
-                    "Monto": valor
+                    "Valor": valor
                 })
-                st.toast("Transacci贸n registrada exitosamente")
+                st.toast("Movimiento agregado")
             else:
-                st.warning("Verifique que el concepto y el monto sean v谩lidos")
+                st.warning("Ingrese un concepto y valor válido")
 
     if st.session_state.movimientos:
         st.divider()
+        st.write("##### Tabla de movimientos")
         df_movs = pd.DataFrame(st.session_state.movimientos)
-        
-        col_list, col_metrics = st.columns([2, 1])
-        
-        with col_list:
-            st.write("##### Historial Consolidado")
-            st.dataframe(df_movs, use_container_width=True, hide_index=True)
+        st.dataframe(df_movs, use_container_width=True, hide_index=True)
 
-        with col_metrics:
-            st.write("##### Balance de Situaci贸n")
-            t_ingresos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
-            t_gastos = sum(m["Monto"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
-            saldo_final = t_ingresos - t_gastos
+        t_ingresos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Ingreso")
+        t_gastos = sum(m["Valor"] for m in st.session_state.movimientos if m["Tipo"] == "Gasto")
+        saldo_final = t_ingresos - t_gastos
 
-            # M茅tricas profesionales[cite: 3]
-            st.metric("Ingresos Totales", f"{t_ingresos:,.2f}")
-            st.metric("Gastos Totales", f"{t_gastos:,.2f}", delta=f"-{t_gastos:,.2f}", delta_color="inverse")
-            st.metric("Balance Neto", f"{saldo_final:,.2f}")
+        st.write("##### Resultado final del flujo de caja")
+        col_m1, col_m2, col_m3 = st.columns(3)
+        col_m1.metric("Total Ingresos", f"{t_ingresos:,.2f}")
+        col_m2.metric("Total Gastos", f"{t_gastos:,.2f}")
+        col_m3.metric("Saldo Final", f"{saldo_final:,.2f}")
 
-            if saldo_final > 0:
-                st.success("Estado de Cuenta: Super谩vit")
-            elif saldo_final < 0:
-                st.error("Estado de Cuenta: D茅ficit")
-            else:
-                st.info("Estado de Cuenta: Equilibrio")
+        if saldo_final > 0:
+            st.success(f"El flujo de caja está a favor: {saldo_final:,.2f}")
+        elif saldo_final < 0:
+            st.error(f"El flujo de caja está en contra: {saldo_final:,.2f}")
+        else:
+            st.info("El flujo de caja está en equilibrio")
             
-        if st.button("Reiniciar Registros"):
+        if st.button("Limpiar historial"):
             st.session_state.movimientos = []
             st.rerun()
     else:
-        st.info("No se han detectado transacciones registradas en el sistema")
-
-# Los dem谩s ejercicios se a帽adir谩n a continuaci贸n...
+        st.info("No hay movimientos registrados")
